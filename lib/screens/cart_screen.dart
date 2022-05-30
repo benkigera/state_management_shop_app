@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:state_management_shop_app/providers/OrderItemModel.dart';
 import 'package:state_management_shop_app/providers/cart.dart' show Cart;
 import 'package:state_management_shop_app/screens/orders_screen.dart';
 
@@ -43,8 +44,14 @@ class CartScreen extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: () {
+                      Provider.of<Orders>(context, listen: false).addOrder(
+                        cart.items.values.toList(),
+                        cart.totalAmount,
+                      );
+                      cart.clear();
                       Navigator.pushNamed(context, OrderScreen.routeName);
                     },
+
                     child: Text('ORDER NOW'),
                     style: ButtonStyle(
                         foregroundColor: MaterialStateProperty.all(
